@@ -1,11 +1,23 @@
 terraform {
-  # This module is now only being tested with Terraform 0.13.x. However, to make upgrading easier, we are setting
-  # 0.12.26 as the minimum version, as that version added support for required_providers with source URLs, making it
-  # forwards compatible with 0.13.x code.
-  required_version = ">= 0.12.26"
+  required_providers {
+    snowflake = {
+      source  = "Snowflake-Labs/snowflake"
+      version = "~> 0.59"
+    }
+  }
 }
 
-# website::tag::1:: The simplest possible Terraform module: it just outputs "Hello, World!"
-output "hello_world" {
-  value = "Hello, World!"
+provider "snowflake" {
+  role  = "SYSADMIN"
+}
+
+resource "snowflake_database" "db" {
+  name     = "TF_DEMO"
+}
+
+resource "snowflake_warehouse" "warehouse" {
+  name           = "TF_DEMO"
+  warehouse_size = "large"
+
+  auto_suspend = 60
 }
