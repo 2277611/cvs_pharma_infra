@@ -8,16 +8,19 @@ terraform {
 }
 
 provider "snowflake" {
-  role  = "SYSADMIN"
+  account  = "ACOUNTADMIN" 
+  username = "SNOWFLAKECOGNIZANT" 
+  password = "Cts@271219921"
+  region    = "gcp_europe_west2" 
 }
 
 resource "snowflake_database" "db" {
-  name     = "TF_DEMO"
+  name     = "SNOWFLAKE_SAMPLE_DATA"
 }
 
 resource "snowflake_warehouse" "warehouse" {
-  name           = "TF_DEMO"
-  warehouse_size = "large"
+  name           = "SNOWFLAKE_SAMPLE_DATA"
+  warehouse_size = "LARGE"
 
   auto_suspend = 60
 }
