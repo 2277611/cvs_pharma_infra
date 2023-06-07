@@ -1,26 +1,35 @@
 terraform {
   required_providers {
+    
     snowflake = {
-      source  = "Snowflake-Labs/snowflake"
-      version = "~> 0.59"
+      source = "Snowflake-Labs/snowflake"
+      version = "~> 0.65.0"
     }
   }
-}
 
-provider "snowflake" {
-  account  = "ACOUNTADMIN" 
-  username = "SNOWFLAKECOGNIZANT" 
-  password = "Cts@271219921"
-  region    = "gcp_europe_west2" 
-}
+  cloud {
+    organization = "Cognizant-kolkata"
+    workspaces {
+      name = "terraforming-snowflake"
+    }
+  }
 
-resource "snowflake_database" "db" {
-  name     = "SNOWFLAKE_SAMPLE_DATA"
 }
 
 resource "snowflake_warehouse" "warehouse" {
-  name           = "SNOWFLAKE_SAMPLE_DATA"
+  name = "CVS_WH"
   warehouse_size = "LARGE"
+  auto_suspend = 600
+}
 
-  auto_suspend = 60
+resource "snowflake_database" "db" {
+  name = "CVS_DB"
+  comment = "test CVS_DB"
+  data_retention_time_in_days = 3
+}
+
+resource "snowflake_database" "db" {
+  name = "CVS_DB_POST"
+  comment = "test CVS_DB"
+  data_retention_time_in_days = 3
 }
