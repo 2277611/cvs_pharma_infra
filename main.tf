@@ -25,7 +25,7 @@ resource "snowflake_warehouse" "warehouse" {
 resource "snowflake_database" "db" {
   name = "CVS_DB"
   comment = "test CVS_DB"
-  data_retention_time_in_days = 3
+  data_retention_time_in_days = 1
 }
 
 resource "snowflake_schema" "schema" {
@@ -40,7 +40,7 @@ resource "snowflake_sequence" "sequence" {
   name     = "CVS_DB_TABLE_sequence"
 }
 
-resource "snowflake_table" "table" {
+resource "snowflake_table" "CVS_DB_TABLE" {
   database            = snowflake_schema.schema.database
   schema              = snowflake_schema.schema.name
   name                = "CVS_DB_TABLE"
