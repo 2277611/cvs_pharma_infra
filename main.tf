@@ -25,35 +25,45 @@ resource "snowflake_warehouse" "warehouse" {
 resource "snowflake_database" "db" {
   name = "CVS_DB"
   comment = "test CVS_DB"
+  data_retention_time_in_days = 1
 }
 
 resource "snowflake_schema" "schema" {
-  name                = "CVS_DB_TABLE_SCHEMA"
-  database            = "CVS_DB"
+  database            = "snowflake_database.db.name"
+  name                = "CVS_DB_TABLE_schema"
+  data_retention_days = 1
+}
+
+resource "snowflake_sequence" "sequence" {
+  database = snowflake_schema.schema.database
+  schema   = snowflake_schema.schema.name
+  name     = "CVS_DB_TABLE_sequence"
 }
 
 resource "snowflake_table" "table" {
+  database            = snowflake_schema.schema.database
+  schema              = snowflake_schema.schema.name
   name                = "CVS_DB_TABLE"
-  database            = "CVS_DB"
-  schema              = "CVS_DB_TABLE_SCHEMA"
+  comment             = "CVS_DB_TABLE"
   cluster_by          = ["employee_dept"]
+  data_retention_days = snowflake_schema.schema.data_retention_days
   change_tracking     = false
 
   column {
     name     = "employee_id"
-    type     = "int"
+    type     = "INT"
     nullable = false
   }
 
   column {
     name     = "employee_name"
-    type     = "varchar"
+    type     = "STRING"
     nullable = false
   }
 
   column {
     name     = "employee_dept"
-    type     = "varchar"
+    type     = "STRING"
     nullable = false
   }
 
