@@ -8,9 +8,9 @@ terraform {
   }
 
   cloud {
-    organization = "Cognizant-kolkata"
+    organization = "CTS-ITPKDC-C3-F4-ODC3"
     workspaces {
-      name = "terraforming-snowflake"
+      name = "cvs_pharma_infra"
     }
   }
 
