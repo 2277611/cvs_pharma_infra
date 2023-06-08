@@ -30,6 +30,9 @@ resource "snowflake_database" "db" {
 
 resource "snowflake_external_table" "external_table_1" {
   database    = "db"
+  location    = "externalStage"
+  refresh_on_create = "true
+  partition_by = "E_DEPT"
   schema      = "schema"
   name        = "CVS_DB_TABLE"
   comment     = "External table-CVS_DB_TABLE"
@@ -38,12 +41,12 @@ resource "snowflake_external_table" "external_table_1" {
   column { 
     name = "id"
     type = "int"
-  }
+  } as E_ID
 
   column { 
     name = "data"
     type = "text"
-  }
+  } as E_DEPT
 }
 
 resource "snowflake_database" "db_post" {
