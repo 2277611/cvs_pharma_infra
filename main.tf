@@ -76,6 +76,15 @@ resource "snowflake_table" "table" {
     type = "TIMESTAMP_NTZ(9)"
   }
 }
+resource "snowflake_table_grant" "grant" {
+  database_name = "CVS_EMPLOYEE_DATA"
+  schema_name   = "CVS_DB_SCHEMA"
+  table_name    = "EMPLOYEE"
+  privilege = "ALL PRIVILEGES"
+  roles     = ["ACCOUNTADMIN"]
+  on_future         = false
+  with_grant_option = false
+}
 
 resource "snowflake_table_constraint" "primary_key" {
   name     = "pkconstraint"
