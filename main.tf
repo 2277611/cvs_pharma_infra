@@ -34,7 +34,7 @@ resource "snowflake_external_table" "external_table_1" {
   database    = "db"
   location    = "externalStage"
   refresh_on_create = "true"
-  partition_by = "employee_id"
+  partition_by = "[employee_id]"
   schema      = "schema"
   file_format = "TYPE = CSV FIELD_DELIMITER = '|'"
   column { 
