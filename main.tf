@@ -33,3 +33,9 @@ resource "snowflake_database" "db_post" {
   comment = "test CVS_DB"
   data_retention_time_in_days = 3
 }
+
+resource "snowflake_database" "db_test" {
+  name = "CVS_DB_TEST"
+  comment = "test CVS_DB"
+  data_retention_time_in_days = 3
+}
