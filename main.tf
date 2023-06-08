@@ -42,13 +42,13 @@ resource "snowflake_external_table" "external_table_1" {
     name = "id"
     type = "int"
   } 
-  as E_ID
+  
 
   column { 
     name = "data"
     type = "text"
   } 
-  as E_DEPT
+  
 }
 
 resource "snowflake_database" "db_post" {
