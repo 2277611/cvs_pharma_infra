@@ -35,7 +35,7 @@ resource "snowflake_database" "billing" {
 }
 
 resource "snowflake_schema" "schema" {
-  database            = "snowflake_database.db_post.name"
+  database            = "snowflake_database.employee.name"
   name                = "CVS_DB_SCHEMA"
 }
 
