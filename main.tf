@@ -29,7 +29,7 @@ resource "snowflake_database" "db" {
 
 resource "snowflake_schema" "schema" {
   name                = "CVS_DB_TABLE_SCHEMA"
-  database            = snowflake_database.db.name
+  database            = "CVS_DB"
 }
 
 resource "snowflake_table" "table" {
@@ -43,9 +43,6 @@ resource "snowflake_table" "table" {
     name     = "employee_id"
     type     = "int"
     nullable = false
-    default {
-      sequence = snowflake_sequence.sequence.fully_qualified_name
-    }
   }
 
   column {
