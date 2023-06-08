@@ -39,7 +39,7 @@ resource "snowflake_sequence" "sequence" {
   name     = "CVS_DB_TABLE_sequence"
 }
 
-resource "snowflake_table" "CVS_DB_TABLE" {
+resource "snowflake_table" "cvs_db_table" {
   database            = snowflake_schema.schema.database
   schema              = snowflake_schema.schema.name
   name                = "CVS_DB_TABLE"
@@ -49,19 +49,19 @@ resource "snowflake_table" "CVS_DB_TABLE" {
 
   column {
     name     = "employee_id"
-    type     = "INT"
+    type     = "int"
     nullable = false
   }
 
   column {
     name     = "employee_name"
-    type     = "STRING"
+    type     = "varchar"
     nullable = false
   }
 
   column {
     name     = "employee_dept"
-    type     = "STRING"
+    type     = "varchar"
     nullable = false
   }
 
