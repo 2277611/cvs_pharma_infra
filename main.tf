@@ -29,7 +29,7 @@ resource "snowflake_database" "db" {
 }
 
 resource "snowflake_schema" "schema" {
-  database            = "CVS_DB"
+  database            = snowflake_database.db.name
   name                = "CVS_DB_TABLE_schema"
 }
 
