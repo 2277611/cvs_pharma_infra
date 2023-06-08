@@ -28,21 +28,21 @@ resource "snowflake_database" "db" {
 }
 
 resource "snowflake_schema" "schema" {
+  name                = "CVS_DB_TABLE_SCHEMA"
   database            = snowflake_database.db.name
-  name                = "CVS_DB_TABLE_schema"
 }
 
 resource "snowflake_sequence" "sequence" {
+  name     = "CVS_DB_TABLE_SEQUENCE"
   database = snowflake_schema.schema.database
   schema   = snowflake_schema.schema.name
-  name     = "CVS_DB_TABLE_sequence"
+  
 }
 
-resource "snowflake_table" "cvs_db_table" {
-  database            = snowflake_schema.schema.database
-  schema              = snowflake_schema.schema.name
+resource "snowflake_table" "table" {
   name                = "CVS_DB_TABLE"
-  comment             = "CVS_DB_TABLE"
+  database            = "CVS_DB"
+  schema              = "CVS_DB_TABLE_SCHEMA"
   cluster_by          = ["employee_dept"]
   change_tracking     = false
 
