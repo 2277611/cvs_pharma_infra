@@ -29,26 +29,24 @@ resource "snowflake_database" "db" {
 }
 
 resource "snowflake_external_table" "external_table_1" {
+  name        = "CVS_DB_TABLE"
+  comment     = "External table-CVS_DB_TABLE"
   database    = "db"
   location    = "externalStage"
   refresh_on_create = "true"
   partition_by = "E_DEPT"
   schema      = "schema"
-  name        = "CVS_DB_TABLE"
-  comment     = "External table-CVS_DB_TABLE"
   file_format = "TYPE = CSV FIELD_DELIMITER = '|'"
-
   column { 
     name = "id"
     type = "int"
+    as   = "NUMBER"
   } 
-  
-
   column { 
     name = "data"
     type = "text"
+    as   = "VARCHAR"
   } 
-  
 }
 
 resource "snowflake_database" "db_post" {
