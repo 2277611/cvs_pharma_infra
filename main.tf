@@ -32,7 +32,7 @@ resource "snowflake_external_table" "external_table_1" {
   name        = "CVS_DB_TABLE"
   comment     = "External table-CVS_DB_TABLE"
   database    = "db"
-  location    = "externalStage"
+  location    = "external"
   refresh_on_create = "true"
   schema      = "schema"
   file_format = "TYPE = CSV FIELD_DELIMITER = '|'"
