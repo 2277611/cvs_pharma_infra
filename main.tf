@@ -82,8 +82,6 @@ resource "snowflake_table_grant" "grant" {
   table_name    = "EMPLOYEE"
   privilege = "ALL PRIVILEGES"
   roles     = ["ACCOUNTADMIN"]
-  on_future         = false
-  with_grant_option = false
 }
 
 resource "snowflake_table_constraint" "primary_key" {
