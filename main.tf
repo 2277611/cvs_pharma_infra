@@ -35,12 +35,12 @@ resource "snowflake_external_table" "external_table_1" {
   comment     = "External table-CVS_DB_TABLE"
   file_format = "TYPE = CSV FIELD_DELIMITER = '|'"
 
-  column { as
+  column { 
     name = "id"
     type = "int"
   }
 
-  column { as
+  column { 
     name = "data"
     type = "text"
   }
