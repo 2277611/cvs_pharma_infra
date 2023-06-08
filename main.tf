@@ -49,10 +49,6 @@ resource "snowflake_table" "table" {
   database            = snowflake_schema.schema.database
   schema              = snowflake_schema.schema.name
   name                = "EMPLOYEE"
-  comment             = "Employee Table"
-  cluster_by          = ["employee_dept"]
-  change_tracking     = false
-
   column {
     name     = "employee_id"
     type     = "INT"
@@ -76,18 +72,11 @@ resource "snowflake_table" "table" {
     type = "TIMESTAMP_NTZ(9)"
   }
 }
+
 resource "snowflake_table_grant" "grant" {
   database_name = "CVS_EMPLOYEE_DATA"
   schema_name   = "CVS_DB_SCHEMA"
   table_name    = "EMPLOYEE"
   privilege = "ALL PRIVILEGES"
   roles     = ["ACCOUNTADMIN"]
-}
-
-resource "snowflake_table_constraint" "primary_key" {
-  name     = "pkconstraint"
-  type     = "PRIMARY KEY"
-  table_id = snowflake_table.table.id
-  columns  = ["employee_id"]
-  comment  = "Primary Key"
 }
