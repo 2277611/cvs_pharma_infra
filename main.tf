@@ -29,7 +29,7 @@ resource "snowflake_database" "db" {
 }
 
 resource "snowflake_schema" "schema" {
-  database            = "db"
+  database            = "CVS_DB"
   name                = "CVS_DB_TABLE_schema"
   data_retention_days = 1
 }
