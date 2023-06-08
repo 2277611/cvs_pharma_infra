@@ -34,16 +34,16 @@ resource "snowflake_external_table" "external_table_1" {
   database    = "db"
   location    = "externalStage"
   refresh_on_create = "true"
-  partition_by = "E_DEPT"
+  partition_by = "employee_id"
   schema      = "schema"
   file_format = "TYPE = CSV FIELD_DELIMITER = '|'"
   column { 
-    name = "id"
+    name = "employee_id"
     type = "int"
     as   = "NUMBER"
   } 
   column { 
-    name = "data"
+    name = "employee_dept"
     type = "text"
     as   = "VARCHAR"
   } 
