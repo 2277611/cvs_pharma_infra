@@ -28,6 +28,24 @@ resource "snowflake_database" "db" {
   data_retention_time_in_days = 3
 }
 
+resource "snowflake_external_table" "external_table_1" {
+  database    = "db"
+  schema      = "schema"
+  name        = "CVS_DB_TABLE"
+  comment     = "External table-CVS_DB_TABLE"
+  file_format = "TYPE = CSV FIELD_DELIMITER = '|'"
+
+  column {
+    name = "id"
+    type = "int"
+  }
+
+  column {
+    name = "data"
+    type = "text"
+  }
+}
+
 resource "snowflake_database" "db_post" {
   name = "CVS_DB_POST"
   comment = "test CVS_DB"
