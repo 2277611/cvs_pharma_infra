@@ -45,7 +45,7 @@ resource "snowflake_table" "table" {
   schema              = snowflake_schema.schema.name
   name                = "CVS_DB_TABLE"
   comment             = "CVS_DB_TABLE"
-  partiotion_by          = ["employee_dept"]
+  partition_by          = ["employee_dept"]
   data_retention_days = snowflake_schema.schema.data_retention_days
   change_tracking     = false
 
