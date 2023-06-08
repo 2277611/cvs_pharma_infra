@@ -1,4 +1,4 @@
-name: "Snowflake Terraform Demo Workflow"
+name: "Snowflake Terraform CVS Workflow"
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
 
 jobs:
   snowflake-terraform-demo:
-    name: "Snowflake Terraform Demo Job"
+    name: "Snowflake Terraform CVS Job"
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
