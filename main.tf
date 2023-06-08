@@ -75,9 +75,12 @@ resource "snowflake_table" "table" {
     name = "employee_DOJ"
     type = "TIMESTAMP_NTZ(9)"
   }
+}
 
-  primary_key {
-    name = "emp_key"
-    keys = ["employee_id"]
-  }
+resource "snowflake_table_constraint" "primary_key" {
+  name     = "pkconstraint"
+  type     = "PRIMARY KEY"
+  table_id = snowflake_table.table.id
+  columns  = ["employee_id"]
+  comment  = "Primary Key"
 }
