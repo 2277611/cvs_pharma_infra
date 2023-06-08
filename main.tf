@@ -25,13 +25,11 @@ resource "snowflake_warehouse" "warehouse" {
 resource "snowflake_database" "db" {
   name                        = "CVS_DB"
   comment                     = "test CVS_DB"
-  data_retention_time_in_days = 1
 }
 
 resource "snowflake_schema" "schema" {
   database            = "snowflake_database.db.name"
   name                = "CVS_DB_SCHEMA"
-  data_retention_days = 1
 }
 
 resource "snowflake_sequence" "sequence" {
@@ -46,7 +44,6 @@ resource "snowflake_table" "table" {
   name                = "EMPLOYEE"
   comment             = "Employee Table"
   cluster_by          = ["employee_dept"]
-  data_retention_days = snowflake_schema.schema.data_retention_days
   change_tracking     = false
 
   column {
