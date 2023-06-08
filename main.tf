@@ -28,25 +28,50 @@ resource "snowflake_database" "db" {
   data_retention_time_in_days = 3
 }
 
-resource "snowflake_external_table" "external_table_1" {
-  name        = "CVS_DB_TABLE"
-  comment     = "External table-CVS_DB_TABLE"
-  database    = "db"
-  location    = "external"
-  refresh_on_create = "true"
-  schema      = "schema"
-  file_format = "TYPE = CSV FIELD_DELIMITER = '|'"
-  column { 
-    name = "employee_id"
-    type = "int"
-    as   = "NUMBER"
-  } 
-  column { 
-    name = "employee_dept"
-    type = "text"
-    as   = "VARCHAR"
-  } 
+resource "snowflake_schema" "schema" {
+  database            = "db"
+  name                = "CVS_DB_TABLE_schema"
+  data_retention_days = 1
 }
+
+resource "snowflake_sequence" "sequence" {
+  database = snowflake_schema.schema.database
+  schema   = snowflake_schema.schema.name
+  name     = "CVS_DB_TABLE_sequence"
+}
+
+resource "snowflake_table" "table" {
+  database            = snowflake_schema.schema.database
+  schema              = snowflake_schema.schema.name
+  name                = "CVS_DB_TABLE"
+  comment             = "CVS_DB_TABLE"
+  partiotion_by          = ["employee_dept"]
+  data_retention_days = snowflake_schema.schema.data_retention_days
+  change_tracking     = false
+
+  column {
+    name     = "employee_id"
+    type     = "INT"
+    nullable = false
+  }
+
+  column {
+    name     = "employee_name"
+    type     = "STRING"
+    nullable = false
+  }
+
+  column {
+    name     = "employee_dept"
+    type     = "STRING"
+    nullable = false
+  }
+
+  column {
+    name = "employee_ DOJ"
+    type = "TIMESTAMP_NTZ(9)"
+  }
+} 
 
 resource "snowflake_database" "db_post" {
   name = "CVS_DB_POST"
