@@ -32,13 +32,6 @@ resource "snowflake_schema" "schema" {
   database            = snowflake_database.db.name
 }
 
-resource "snowflake_sequence" "sequence" {
-  name     = "CVS_DB_TABLE_SEQUENCE"
-  database = snowflake_schema.schema.database
-  schema   = snowflake_schema.schema.name
-  
-}
-
 resource "snowflake_table" "table" {
   name                = "CVS_DB_TABLE"
   database            = "CVS_DB"
