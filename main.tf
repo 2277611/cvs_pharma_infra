@@ -31,7 +31,6 @@ resource "snowflake_database" "db" {
 resource "snowflake_schema" "schema" {
   database            = "CVS_DB"
   name                = "CVS_DB_TABLE_schema"
-  data_retention_days = 1
 }
 
 resource "snowflake_sequence" "sequence" {
@@ -46,7 +45,6 @@ resource "snowflake_table" "CVS_DB_TABLE" {
   name                = "CVS_DB_TABLE"
   comment             = "CVS_DB_TABLE"
   cluster_by          = ["employee_dept"]
-  data_retention_days = snowflake_schema.schema.data_retention_days
   change_tracking     = false
 
   column {
