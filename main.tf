@@ -25,7 +25,6 @@ resource "snowflake_warehouse" "warehouse" {
 resource "snowflake_database" "db" {
   name = "CVS_DB"
   comment = "test CVS_DB"
-  data_retention_time_in_days = 1
 }
 
 resource "snowflake_schema" "schema" {
@@ -51,6 +50,9 @@ resource "snowflake_table" "cvs_db_table" {
     name     = "employee_id"
     type     = "int"
     nullable = false
+    default {
+      sequence = snowflake_sequence.sequence.fully_qualified_name
+    }
   }
 
   column {
