@@ -16,18 +16,6 @@ terraform {
 
 }
 
-resource "snowflake_warehouse" "cvs_warehouse" {
-  name           = "CVS_WH"
-  warehouse_size = "LARGE"
-  auto_suspend   = 600
-}
-
-resource "snowflake_warehouse_grant" "CVS_WH_grant" {
-  warehouse_name = "CVS_WH"
-  privilege      = "ALL PRIVILEGES"
-  roles = ["ACCOUNTADMIN"]
-}
-
 resource "snowflake_database" "employee_db" {
   name                        = "CVS_EMPLOYEE_DATA"
 }
