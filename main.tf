@@ -10,66 +10,54 @@ terraform {
   cloud {
     organization = "CVS-PHARMA-CTS-ITP-KDC"
     workspaces {
-      name = "cvs_pharma_infra_core"
+      name = "cvs_pharma_infra"
     }
   }
+
 }
-resource "snowflake_warehouse" "cvs_warehouse" {
+
+resource "snowflake_warehouse" "warehouse" {
   name           = "CVS_WH"
   warehouse_size = "LARGE"
   auto_suspend   = 600
 }
 
-resource "snowflake_warehouse_grant" "CVS_WH_grant" {
-  warehouse_name = "CVS_WH"
-  privilege      = "ALL PRIVILEGES"
-  roles = ["ACCOUNTADMIN","ORGADMIN"]
+resource "snowflake_database" "employee" {
+  name                        = "CVS_EMPLOYEE_DATA"
+}
+
+resource "snowflake_database" "project" {
+  name                        = "CVS_PROJECT_DATA"
+}
+
+resource "snowflake_database" "billing" {
+  name                        = "CVS_PROJ_BILLING_DATA"
+}
+
+resource "snowflake_schema" "schema" {
+  database            = "CVS_EMPLOYEE_DATA"
+  name                = "CVS_DB_SCHEMA"
+}
+
+resource "snowflake_schema" "customer_schema" {
+  database            = "CVS_PROJ_BILLING_DATA"
+  name                = "CVS_DB_SCHEMA_CUST"
+}
+
+resource "snowflake_sequence" "sequence" {
+  database = snowflake_schema.schema.database
+  schema   = snowflake_schema.schema.name
+  name     = "CVS_DB_SEQUENCE"
+}
+resource "snowflake_sequence" "customer_sequence" {
+  database = snowflake_schema.schema.database
+  schema   = snowflake_schema.schema.name
+  name     = "CVS_DB_SEQUENCE_CUST"
 } 
 
-resource "snowflake_database" "employee_db" {
-  name = "CVS_EMPLOYEE_DATA"
-  comment = "Created by terraform"
-  data_retention_time_in_days = 7
-  
-}
-
-resource "snowflake_database_grant" "employee_db_grant" {
-  database_name = "CVS_EMPLOYEE_DATA"
-  privilege = "ALL PRIVILEGES"
-  roles     = ["ACCOUNTADMIN","ORGADMIN"]
-  with_grant_option = true
-}
-
-resource "snowflake_schema" "employee_schema" {
-  database            = "CVS_EMPLOYEE_DATA"
-  name                = "CVS_EMPLOYEE_SCHEMA"
-  data_retention_days = 7
-}
-
-resource "snowflake_schema_grant" "employee_schema_grant" {
-  database_name = snowflake_schema.employee_schema.database
-  schema_name   = snowflake_schema.employee_schema.name
-  privilege = "ALL PRIVILEGES"
-  roles     = ["ACCOUNTADMIN","ORGADMIN"]
-}
-
-resource "snowflake_sequence" "employee_sequence" {
-  database =  snowflake_schema.employee_schema.database
-  schema   = snowflake_schema.employee_schema.name
-  name     = "CVS_EMPLOYEE_SEQUENCE"
-}
-
-resource "snowflake_sequence_grant" "employee_sequence_grant" {
-  database_name = snowflake_schema.employee_schema.database
-  schema_name   = snowflake_schema.employee_schema.name
-  sequence_name = snowflake_sequence.employee_sequence.name
-  privilege = "ALL PRIVILEGES"
-  roles     = ["ACCOUNTADMIN","ORGADMIN"]
-}
-
-resource "snowflake_table" "employee_table" {
-  database            = snowflake_schema.employee_schema.database
-  schema              = snowflake_schema.employee_schema.name
+resource "snowflake_table" "table" {
+  database            = snowflake_schema.schema.database
+  schema              = snowflake_schema.schema.name
   name                = "EMPLOYEE"
   column {
     name     = "employee_id"
@@ -91,16 +79,73 @@ resource "snowflake_table" "employee_table" {
 
 }
 
-resource "snowflake_table_grant" "employee_table_grant" {
-  database_name = snowflake_schema.employee_schema.database
-  schema_name   = snowflake_schema.employee_schema.name
-  table_name    = snowflake_table.employee_table.name
+resource "snowflake_table_grant" "grant" {
+  database_name = "CVS_EMPLOYEE_DATA"
+  schema_name   = "CVS_DB_SCHEMA"
+  table_name    = "EMPLOYEE"
   privilege = "ALL PRIVILEGES"
   roles     = ["ACCOUNTADMIN"]
 }
 
 
+resource "snowflake_table" "customer" {
+  database            = snowflake_schema.customer_schema.database
+  schema              = snowflake_schema.customer_schema.name
+  name                = "CUSTOMER_BILLING"
+  column {
+    name     = "CustID"
+    type     = "varchar"
+    nullable = false
+  }
 
+  column {
+    name     = "Company"
+    type     = "varchar"
+    nullable = false
+  }
 
+  column {
+    name     = "Address"
+    type     = "varchar"
+    nullable = false
+  }
 
+   column {
+    name     = "City"
+    type     = "varchar"
+    nullable = false
+  }
 
+   column {
+    name     = "State"
+    type     = "varchar"
+    nullable = false
+  }
+
+   column {
+    name     = "Zip"
+    type     = "varchar"
+    nullable = false
+  }
+
+   column {
+    name     = "Country"
+    type     = "varchar"
+    nullable = false
+  }
+
+  column {
+    name     = "Phone"
+    type     = "varchar"
+    nullable = false
+  }
+
+}
+
+resource "snowflake_table_grant" "grant_cust" {
+  database_name = "CVS_PROJ_BILLING_DATA"
+  schema_name   = "CVS_DB_SCHEMA_CUST"
+  table_name    = "CUSTOMER_BILLING"
+  privilege = "ALL PRIVILEGES"
+  roles     = ["ACCOUNTADMIN"]
+}
