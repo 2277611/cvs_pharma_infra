@@ -23,7 +23,7 @@ resource "snowflake_warehouse" "cvs_warehouse" {
 resource "snowflake_warehouse_grant" "CVS_WH_grant" {
   warehouse_name = "CVS_WH"
   privilege      = "ALL PRIVILEGES"
-  roles = ["ACCOUNTADMIN","ORGADMIN"]
+  roles = ["ACCOUNTADMIN"]
 } 
 
 
