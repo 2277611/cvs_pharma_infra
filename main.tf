@@ -16,7 +16,7 @@ terraform {
 
 }
 
-resource "snowflake_warehouse" "warehouse" {
+resource "snowflake_warehouse" "cvs_warehouse" {
   name           = "CVS_WH"
   warehouse_size = "LARGE"
   auto_suspend   = 600
