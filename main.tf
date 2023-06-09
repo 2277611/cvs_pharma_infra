@@ -35,7 +35,7 @@ resource "snowflake_database" "employee_db" {
 
 resource "snowflake_database_grant" "employee_db_grant" {
   database_name = snowflake_database.employee_db.name
-  privilege = "USAGE"
+  privilege = "ALL PRIVILEGES"
   roles     = ["ACCOUNTADMIN","ORGADMIN"]
   with_grant_option = true
 }
@@ -49,7 +49,7 @@ resource "snowflake_schema" "employee_schema" {
 resource "snowflake_schema_grant" "employee_schema_grant" {
   database_name = snowflake_database.employee_db.name
   schema_name   = snowflake_schema.employee_schema.name
-  privilege = "SELECT"
+  privilege = "ALL PRIVILEGES"
   roles     = ["ACCOUNTADMIN","ORGADMIN"]
 }
 
@@ -63,7 +63,7 @@ resource "snowflake_sequence_grant" "employee_sequence_grant" {
   database_name = snowflake_database.employee_db.name
   schema_name   = snowflake_schema.employee_schema.name
   sequence_name = snowflake_sequence.employee_sequence.name
-  privilege = "SELECT"
+  privilege = "ALL PRIVILEGES"
   roles     = ["ACCOUNTADMIN","ORGADMIN"]
 }
 
@@ -95,7 +95,7 @@ resource "snowflake_table_grant" "employee_table_grant" {
   database_name = snowflake_database.employee_db.name
   schema_name   = snowflake_schema.employee_schema.name
   table_name    = snowflake_table.employee_table.name
-  privilege = "USAGE"
+  privilege = "ALL PRIVILEGES"
   roles     = ["ACCOUNTADMIN"]
 }
 
