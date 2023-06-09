@@ -24,24 +24,23 @@ resource "snowflake_database" "billing_db" {
 }
 
 resource "snowflake_schema" "employee_schema" {
-  database = "CVS_EMPLOYEE_DATA"
-  name = "CVS_EMPLOYEE_SCHEMA"
+  database            = snowflake_database.employee_db.name
+  name                = "CVS_EMPLOYEE_SCHEMA"
 }
 
 resource "snowflake_schema" "customer_schema" {
-  database = "CVS_PROJ_BILLING_DATA"
-  name = "CVS_CUSTOMER_SCHEMA"
+  database            = snowflake_database.billing_db.name
+  name                = "CVS_CUSTOMER_SCHEMA"
 }
 
 resource "snowflake_sequence" "employee_sequence" {
-  database = "CVS_EMPLOYEE_DATA"
-  schema = "CVS_EMPLOYEE_SCHEMA"
-  name = "CVS_EMPLOYEE_SEQUENCE"
+  database =  snowflake_database.employee_db.name
+  schema   = snowflake_schema.employee_schema.name
+  name     = "CVS_EMPLOYEE_SEQUENCE"
 }
-
 resource "snowflake_sequence" "customer_sequence" {
-  database = "CVS_PROJ_BILLING_DATA"
-  schema   = "CVS_CUSTOMER_SCHEMA"
+  database = snowflake_database.billing_db.name
+  schema   = snowflake_schema.customer_schema.name
   name     = "CVS_CUSTOMER_SEQUENCE"
 }
 
