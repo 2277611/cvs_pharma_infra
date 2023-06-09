@@ -44,16 +44,7 @@ resource "snowflake_schema" "customer_schema" {
   name                = "CVS_CUSTOMER_SCHEMA"
 }
 
-resource "snowflake_sequence" "employee_sequence" {
-  database =  snowflake_database.employee_db.name
-  schema   = snowflake_schema.employee_schema.name
-  name     = "CVS_EMPLOYEE_SEQUENCE"
-}
-resource "snowflake_sequence" "customer_sequence" {
-  database = snowflake_database.billing_db.name
-  schema   = snowflake_schema.customer_schema.name
-  name     = "CVS_CUSTOMER_SEQUENCE"
-} 
+ 
 
 resource "snowflake_table" "employee_table" {
   database            = snowflake_database.employee_db.name
