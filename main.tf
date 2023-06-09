@@ -49,7 +49,7 @@ resource "snowflake_schema_grant" "employee_schema_grant" {
 }
 
 resource "snowflake_sequence" "employee_sequence" {
-  database =  "snowflake_database.employee_db.name
+  database =  snowflake_database.employee_db.name
   schema   = snowflake_schema.employee_schema.name
   name     = "CVS_EMPLOYEE_SEQUENCE"
 }
@@ -63,7 +63,7 @@ resource "snowflake_sequence_grant" "employee_sequence_grant" {
 }
 
 resource "snowflake_table" "employee_table" {
-  database            = "CVS_EMPLOYEE_DATA"
+  database            = snowflake_database.employee_db.name
   schema              = snowflake_schema.employee_schema.name
   name                = "EMPLOYEE"
   column {
@@ -87,9 +87,9 @@ resource "snowflake_table" "employee_table" {
 }
 
 resource "snowflake_table_grant" "employee_table_grant" {
-  database_name = "CVS_EMPLOYEE_DATA"
-  schema_name   = "CVS_EMPLOYEE_SCHEMA"
-  table_name    = "EMPLOYEE"
+  database_name = snowflake_database.employee_db.name
+  schema_name   = snowflake_schema.employee_schema.name
+  table_name    = snowflake_table.employee_table.name
   privilege = "ALL PRIVILEGES"
   roles     = ["ACCOUNTADMIN"]
 }
