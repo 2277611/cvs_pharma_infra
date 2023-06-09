@@ -30,8 +30,10 @@ resource "snowflake_database" "employee_db" {
   name = "CVS_EMPLOYEE_DATA"
 }
 
-resource "snowflake_database" "billing_db" {
-  name = "CVS_PROJ_BILLING_DATA"
+resource "snowflake_database_grant" "employee_db_grant" {
+  database_name = snowflake_database.employee_db.name
+  privilege = "ALL PRIVILEGES"
+  roles     = ["ACCOUNTADMIN","ORGADMIN"]
 }
 
 resource "snowflake_schema" "employee_schema" {
@@ -39,9 +41,11 @@ resource "snowflake_schema" "employee_schema" {
   name                = "CVS_EMPLOYEE_SCHEMA"
 }
 
-resource "snowflake_schema" "customer_schema" {
-  database            = snowflake_database.billing_db.name
-  name                = "CVS_CUSTOMER_SCHEMA"
+resource "snowflake_schema_grant" "employee_schema_grant" {
+  database_name = snowflake_database.employee_db.name
+  schema_name   = snowflake_schema.employee_schema.name
+  privilege = "ALL PRIVILEGES"
+  roles     = ["ACCOUNTADMIN","ORGADMIN"]
 }
 
 resource "snowflake_sequence" "employee_sequence" {
@@ -49,21 +53,47 @@ resource "snowflake_sequence" "employee_sequence" {
   schema   = snowflake_schema.employee_schema.name
   name     = "CVS_EMPLOYEE_SEQUENCE"
 }
+
+resource "snowflake_sequence_grant" "employee_sequence_grant" {
+  database_name = snowflake_database.employee_db.name
+  schema_name   = snowflake_schema.employee_schema.name
+  sequence_name = snowflake_sequence.employee_sequence.name
+  privilege = "ALL PRIVILEGES"
+  roles     = ["ACCOUNTADMIN","ORGADMIN"]
+}
+
+resource "snowflake_database" "billing_db" {
+  name = "CVS_PROJ_BILLING_DATA"
+}
+
+resource "snowflake_database_grant" "billing_db_grant" {
+  database_name = snowflake_database.billing_db.name
+  privilege = "ALL PRIVILEGES"
+  roles     = ["ACCOUNTADMIN","ORGADMIN"]
+}
+
+resource "snowflake_schema" "customer_schema" {
+  database            = snowflake_database.billing_db.name
+  name                = "CVS_CUSTOMER_SCHEMA"
+}
+
+resource "snowflake_schema_grant" "customer_schema_grant" {
+  database_name = snowflake_database.billing_db.name
+  schema_name   = snowflake_schema.customer_schema.name
+  privilege = "ALL PRIVILEGES"
+  roles     = ["ACCOUNTADMIN","ORGADMIN"]
+}
+
 resource "snowflake_sequence" "customer_sequence" {
   database = snowflake_database.billing_db.name
   schema   = snowflake_schema.customer_schema.name
   name     = "CVS_CUSTOMER_SEQUENCE"
 }
 
-
-resource "snowflake_database_grant" "employee_db_grant" {
-  database_name = snowflake_database.employee_db.name
-  privilege = "ALL PRIVILEGES"
-  roles     = ["ACCOUNTADMIN","ORGADMIN"]
-}
-
-resource "snowflake_database_grant" "billing_db_grant" {
+resource "snowflake_sequence_grant" "customer_sequence_grant" {
   database_name = snowflake_database.billing_db.name
+  schema_name   = snowflake_schema.customer_schema.name
+  sequence_name = snowflake_sequence.customer_sequence.name
   privilege = "ALL PRIVILEGES"
   roles     = ["ACCOUNTADMIN","ORGADMIN"]
 }
