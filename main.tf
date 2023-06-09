@@ -34,33 +34,33 @@ resource "snowflake_database" "employee_db" {
 }
 
 resource "snowflake_database_grant" "employee_db_grant" {
-  database_name = snowflake_database.employee_db.name
+  database_name = "CVS_EMPLOYEE_DATA"
   privilege = "ALL PRIVILEGES"
   roles     = ["ACCOUNTADMIN","ORGADMIN"]
   with_grant_option = true
 }
 
 resource "snowflake_schema" "employee_schema" {
-  database            = snowflake_database.employee_db.name
+  database            = "CVS_EMPLOYEE_DATA"
   name                = "CVS_EMPLOYEE_SCHEMA"
   data_retention_days = 7
 }
 
 resource "snowflake_schema_grant" "employee_schema_grant" {
-  database_name = snowflake_database.employee_db.name
+  database_name = snowflake_schema.employee_schema.database
   schema_name   = snowflake_schema.employee_schema.name
   privilege = "ALL PRIVILEGES"
   roles     = ["ACCOUNTADMIN","ORGADMIN"]
 }
 
 resource "snowflake_sequence" "employee_sequence" {
-  database =  snowflake_database.employee_db.name
+  database =  snowflake_schema.employee_schema.database
   schema   = snowflake_schema.employee_schema.name
   name     = "CVS_EMPLOYEE_SEQUENCE"
 }
 
 resource "snowflake_sequence_grant" "employee_sequence_grant" {
-  database_name = snowflake_database.employee_db.name
+  database_name = snowflake_schema.employee_schema.database
   schema_name   = snowflake_schema.employee_schema.name
   sequence_name = snowflake_sequence.employee_sequence.name
   privilege = "ALL PRIVILEGES"
@@ -68,7 +68,7 @@ resource "snowflake_sequence_grant" "employee_sequence_grant" {
 }
 
 resource "snowflake_table" "employee_table" {
-  database            = snowflake_database.employee_db.name
+  database            = snowflake_schema.employee_schema.database
   schema              = snowflake_schema.employee_schema.name
   name                = "EMPLOYEE"
   column {
@@ -92,7 +92,7 @@ resource "snowflake_table" "employee_table" {
 }
 
 resource "snowflake_table_grant" "employee_table_grant" {
-  database_name = snowflake_database.employee_db.name
+  database_name = snowflake_schema.employee_schema.database
   schema_name   = snowflake_schema.employee_schema.name
   table_name    = snowflake_table.employee_table.name
   privilege = "ALL PRIVILEGES"
