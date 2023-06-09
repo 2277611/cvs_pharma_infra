@@ -20,52 +20,11 @@ resource "snowflake_warehouse" "cvs_warehouse" {
   auto_suspend   = 600
 }
 
-
-resource "snowflake_database" "employee_db" {
-  name = "CVS_EMPLOYEE_DATA"
-  comment = "Created by terraform"
-  data_retention_time_in_days = 7
-  
-}
-
-
-resource "snowflake_schema" "employee_schema" {
-  database            = "CVS_EMPLOYEE_DATA"
-  name                = "CVS_EMPLOYEE_SCHEMA"
-  data_retention_days = 7
-}
-
-
-resource "snowflake_sequence" "employee_sequence" {
-  database =  snowflake_schema.employee_schema.database
-  schema   = snowflake_schema.employee_schema.name
-  name     = "CVS_EMPLOYEE_SEQUENCE"
-}
-
-
-resource "snowflake_table" "employee_table" {
-  database            = snowflake_schema.employee_schema.database
-  schema              = snowflake_schema.employee_schema.name
-  name                = "EMPLOYEE"
-  column {
-    name     = "employee_id"
-    type     = "INT"
-    nullable = false
-  }
-
-  column {
-    name     = "employee_name"
-    type     = "STRING"
-    nullable = false
-  }
-
-  column {
-    name     = "employee_dept"
-    type     = "STRING"
-    nullable = false
-  }
-
-}
+resource "snowflake_warehouse_grant" "CVS_WH_grant" {
+  warehouse_name = "CVS_WH"
+  privilege      = "ALL PRIVILEGES"
+  roles = ["ACCOUNTADMIN","ORGADMIN"]
+} 
 
 
 
