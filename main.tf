@@ -89,7 +89,7 @@ resource "snowflake_table_grant" "employee_table_grant" {
 
 
 resource "snowflake_table" "customer_table" {
-  database            = snowflake_database.customer_db.name
+  database            = snowflake_database.billing_db.name
   schema              = snowflake_schema.customer_schema.name
   name                = "CUSTOMER_BILLING"
   column {
