@@ -31,31 +31,31 @@ resource "snowflake_database" "employee_db" {
 }
 
 resource "snowflake_database_grant" "employee_db_grant" {
-  database_name = snowflake_database.employee_db.name
+  database_name = "CVS_EMPLOYEE_DATA"
   privilege = "ALL PRIVILEGES"
   roles     = ["ACCOUNTADMIN","ORGADMIN"]
 }
 
 resource "snowflake_schema" "employee_schema" {
-  database            = snowflake_database.employee_db.name
+  database            = "CVS_EMPLOYEE_DATA"
   name                = "CVS_EMPLOYEE_SCHEMA"
 }
 
 resource "snowflake_schema_grant" "employee_schema_grant" {
-  database_name = snowflake_database.employee_db.name
+  database_name = "CVS_EMPLOYEE_DATA"
   schema_name   = snowflake_schema.employee_schema.name
   privilege = "ALL PRIVILEGES"
   roles     = ["ACCOUNTADMIN","ORGADMIN"]
 }
 
 resource "snowflake_sequence" "employee_sequence" {
-  database =  snowflake_database.employee_db.name
+  database =  "CVS_EMPLOYEE_DATA"
   schema   = snowflake_schema.employee_schema.name
   name     = "CVS_EMPLOYEE_SEQUENCE"
 }
 
 resource "snowflake_sequence_grant" "employee_sequence_grant" {
-  database_name = snowflake_database.employee_db.name
+  database_name = "CVS_EMPLOYEE_DATA"
   schema_name   = snowflake_schema.employee_schema.name
   sequence_name = snowflake_sequence.employee_sequence.name
   privilege = "ALL PRIVILEGES"
@@ -99,7 +99,7 @@ resource "snowflake_sequence_grant" "customer_sequence_grant" {
 }
 
 resource "snowflake_table" "employee_table" {
-  database            = snowflake_database.employee_db.name
+  database            = "CVS_EMPLOYEE_DATA"
   schema              = snowflake_schema.employee_schema.name
   name                = "EMPLOYEE"
   column {
