@@ -20,11 +20,5 @@ resource "snowflake_database" "employee_db" {
   name                        = "CVS_EMPLOYEE_DATA"
 }
 
-resource "snowflake_database" "project_db" {
-  name                        = "CVS_PROJECT_DATA"
-}
 
-resource "snowflake_database" "billing_db" {
-  name                        = "CVS_PROJ_BILLING_DATA"
-}
 
