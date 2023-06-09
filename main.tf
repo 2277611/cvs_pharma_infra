@@ -22,42 +22,42 @@ resource "snowflake_warehouse" "warehouse" {
   auto_suspend   = 600
 }
 
-resource "snowflake_database" "employee" {
+resource "snowflake_database" "employee_db" {
   name                        = "CVS_EMPLOYEE_DATA"
 }
 
-resource "snowflake_database" "project" {
+resource "snowflake_database" "project_db" {
   name                        = "CVS_PROJECT_DATA"
 }
 
-resource "snowflake_database" "billing" {
+resource "snowflake_database" "billing_db" {
   name                        = "CVS_PROJ_BILLING_DATA"
 }
 
-resource "snowflake_schema" "schema" {
-  database            = "CVS_EMPLOYEE_DATA"
-  name                = "CVS_DB_SCHEMA"
+resource "snowflake_schema" "employee_schema" {
+  database            = snowflake_database.employee_db.name
+  name                = "CVS_EMPLOYEE_SCHEMA"
 }
 
 resource "snowflake_schema" "customer_schema" {
-  database            = "CVS_PROJ_BILLING_DATA"
-  name                = "CVS_DB_SCHEMA_CUST"
+  database            = snowflake_database.billing_db.name
+  name                = "CVS_CUSTOMER_SCHEMA"
 }
 
-resource "snowflake_sequence" "sequence" {
-  database = snowflake_schema.schema.database
-  schema   = snowflake_schema.schema.name
-  name     = "CVS_DB_SEQUENCE"
+resource "snowflake_sequence" "employee_sequence" {
+  database =  snowflake_database.employee_db.name
+  schema   = snowflake_schema.employee_schema.name
+  name     = "CVS_EMPLOYEE_SEQUENCE"
 }
 resource "snowflake_sequence" "customer_sequence" {
-  database = snowflake_schema.customer_schema.database
+  database = snowflake_database.billing_db.name
   schema   = snowflake_schema.customer_schema.name
-  name     = "CVS_DB_SEQUENCE_CUST"
+  name     = "CVS_CUSTOMER_SEQUENCE"
 } 
 
-resource "snowflake_table" "table" {
-  database            = snowflake_schema.schema.database
-  schema              = snowflake_schema.schema.name
+resource "snowflake_table" "employee_table" {
+  database            = snowflake_database.employee_db.name
+  schema              = snowflake_schema.employee_schema.name
   name                = "EMPLOYEE"
   column {
     name     = "employee_id"
@@ -79,17 +79,17 @@ resource "snowflake_table" "table" {
 
 }
 
-resource "snowflake_table_grant" "grant" {
+resource "snowflake_table_grant" "employee_table_grant" {
   database_name = "CVS_EMPLOYEE_DATA"
-  schema_name   = "CVS_DB_SCHEMA"
+  schema_name   = "CVS_EMPLOYEE_SCHEMA"
   table_name    = "EMPLOYEE"
   privilege = "ALL PRIVILEGES"
   roles     = ["ACCOUNTADMIN"]
 }
 
 
-resource "snowflake_table" "customer" {
-  database            = snowflake_schema.customer_schema.database
+resource "snowflake_table" "customer_table" {
+  database            = snowflake_database.customer_db.name
   schema              = snowflake_schema.customer_schema.name
   name                = "CUSTOMER_BILLING"
   column {
@@ -144,7 +144,7 @@ resource "snowflake_table" "customer" {
 
 resource "snowflake_table_grant" "grant_cust" {
   database_name = "CVS_PROJ_BILLING_DATA"
-  schema_name   = "CVS_DB_SCHEMA_CUST"
+  schema_name   = "CVS_CUSTOMER_SCHEMA"
   table_name    = "CUSTOMER_BILLING"
   privilege = "ALL PRIVILEGES"
   roles     = ["ACCOUNTADMIN"]
