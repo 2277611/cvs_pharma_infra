@@ -50,8 +50,8 @@ resource "snowflake_sequence" "sequence" {
   name     = "CVS_DB_SEQUENCE"
 }
 resource "snowflake_sequence" "customer_sequence" {
-  database = snowflake_schema.schema.database
-  schema   = snowflake_schema.schema.name
+  database = snowflake_schema.customer_schema.database
+  schema   = snowflake_schema.customer_schema.name
   name     = "CVS_DB_SEQUENCE_CUST"
 } 
 
