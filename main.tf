@@ -10,7 +10,7 @@ terraform {
   cloud {
     organization = "CVS-PHARMA-CTS-ITP-KDC"
     workspaces {
-      name = "cvs_pharma_infra"
+      name = "cvs_pharma_infra_core"
     }
   }
 
