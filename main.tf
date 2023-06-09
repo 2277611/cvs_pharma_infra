@@ -29,7 +29,7 @@ resource "snowflake_schema" "employee_schema" {
 }
 
 resource "snowflake_schema" "customer_schema" {
-  database = CVS_PROJ_BILLING_DATA
+  database = "CVS_PROJ_BILLING_DATA"
   name = "CVS_CUSTOMER_SCHEMA"
 }
 
