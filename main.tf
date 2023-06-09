@@ -20,5 +20,11 @@ resource "snowflake_database" "employee_db" {
   name                        = "CVS_EMPLOYEE_DATA"
 }
 
+resource "snowflake_database_grant" "employee_db_grant" {
+  database_name = "CVS_EMPLOYEE_DATA"
+  privilege = "ALL PRIVILEGES"
+  roles     = ["ACCOUNTADMIN"]
+}
+
 
 
