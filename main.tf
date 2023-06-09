@@ -16,25 +16,20 @@ terraform {
 }
 
 resource "snowflake_database" "employee_db" {
-  name                        = "CVS_EMPLOYEE_DATA"
+  name = "CVS_EMPLOYEE_DATA"
 }
 
 resource "snowflake_schema" "employee_schema" {
-  database            = snowflake_database.employee_db.name
-  name                = "CVS_EMPLOYEE_SCHEMA"
+  database = "CVS_EMPLOYEE_DATA"
+  name = "CVS_EMPLOYEE_SCHEMA"
 }
 
 resource "snowflake_sequence" "employee_sequence" {
-  database =  snowflake_database.employee_db.name
-  schema   = snowflake_schema.employee_schema.name
-  name     = "CVS_EMPLOYEE_SEQUENCE"
+  database = "CVS_EMPLOYEE_DATA"
+  schema = "CVS_EMPLOYEE_SCHEMA"
+  name = "CVS_EMPLOYEE_SEQUENCE"
 }
 
-resource "snowflake_database_grant" "employee_db_grant" {
-  database_name = "CVS_EMPLOYEE_DATA"
-  privilege = "ALL PRIVILEGES"
-  roles     = ["ACCOUNTADMIN"]
-}
 
 
 
