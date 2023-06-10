@@ -27,6 +27,12 @@ resource "snowflake_database" "billing_db" {
   data_retention_time_in_days = 3
 }
 
+resource "snowflake_database" "project_db" {
+  name = "CVS_PROJ_DATA"
+  comment = "Created by terraform"
+  data_retention_time_in_days = 3
+}
+
 resource "snowflake_database_grant" "employee_db_grant" {
   database_name = "CVS_EMPLOYEE_DATA"
   privilege = "OWNERSHIP"
@@ -36,6 +42,13 @@ resource "snowflake_database_grant" "employee_db_grant" {
 
 resource "snowflake_database_grant" "billing_db_grant" {
   database_name = "CVS_PROJ_BILLING_DATA"
+  privilege = "OWNERSHIP"
+  roles     = ["ACCOUNTADMIN"]
+  with_grant_option = true
+}
+
+resource "snowflake_database_grant" "project_db_grant" {
+  database_name = "CVS_PROJ_DATA"
   privilege = "OWNERSHIP"
   roles     = ["ACCOUNTADMIN"]
   with_grant_option = true
