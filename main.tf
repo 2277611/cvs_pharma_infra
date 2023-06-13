@@ -132,6 +132,30 @@ resource "snowflake_table" "employee_table" {
 
 }
 
+resource "snowflake_table" "new_employee_table" {
+  database            = snowflake_schema.employee_schema.database
+  schema              = snowflake_schema.employee_schema.name
+  name                = "NEW_EMPLOYEE"
+  column {
+    name     = "employee_id"
+    type     = "INT"
+    nullable = false
+  }
+
+  column {
+    name     = "employee_name"
+    type     = "STRING"
+    nullable = false
+  }
+
+  column {
+    name     = "employee_dept"
+    type     = "STRING"
+    nullable = false
+  }
+
+}
+
 resource "snowflake_table" "customer_table" {
   database            = snowflake_schema.customer_schema.database
   schema              = snowflake_schema.customer_schema.name
@@ -190,6 +214,14 @@ resource "snowflake_table_grant" "employee_table_grant" {
   database_name = snowflake_schema.employee_schema.database
   schema_name   = snowflake_schema.employee_schema.name
   table_name    = snowflake_table.employee_table.name
+  privilege = "OWNERSHIP"
+  roles     = ["ACCOUNTADMIN"]
+}
+
+resource "snowflake_table_grant" "new_employee_table_grant" {
+  database_name = snowflake_schema.employee_schema.database
+  schema_name   = snowflake_schema.employee_schema.name
+  table_name    = snowflake_table.new_employee_table.name
   privilege = "OWNERSHIP"
   roles     = ["ACCOUNTADMIN"]
 }
