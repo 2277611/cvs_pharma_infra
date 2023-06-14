@@ -142,6 +142,7 @@ resource "snowflake_table" "new_employee_table" {
     nullable = false
   }
 
+  
   column {
     name     = "employee_name"
     type     = "STRING"
