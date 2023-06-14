@@ -3,7 +3,7 @@ name: "Snowflake Terraform CVS Workflow"
 on:
   push:
     branches:
-      - main
+      - dev
 
 jobs:
   snowflake-terraform-demo:
