@@ -44,7 +44,7 @@ resource "snowflake_database_grant" "employee_db_grant" {
   privilege = "OWNERSHIP"
   roles     = ["ACCOUNTADMIN"]
   with_grant_option = true
-}
+} 
 
 resource "snowflake_database_grant" "new_employee_db_grant" {
   database_name = "CVS_EMPLOYEE_DATA_1"
