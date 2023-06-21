@@ -109,11 +109,11 @@ resource "snowflake_sequence_grant" "customer_sequence_grant" {
 }
 
 resource "snowflake_table" "employee_table" {
-  database            = snowflake_schema.employee_schema.database
+  database            = snowflake_database.employee_db.name
   schema              = snowflake_schema.employee_schema.name
   name                = "EMPLOYEE"
   column {
-    name     = "employee_id"
+    name     = "employee_EID"
     type     = "INT"
     nullable = false
   }
@@ -133,7 +133,7 @@ resource "snowflake_table" "employee_table" {
 }
 
 resource "snowflake_table" "new_employee_table" {
-  database            = snowflake_schema.employee_schema.database
+  database            = snowflake_database.employee_db.name
   schema              = snowflake_schema.employee_schema.name
   name                = "NEW_EMPLOYEE"
   column {
@@ -157,7 +157,7 @@ resource "snowflake_table" "new_employee_table" {
 }
 
 resource "snowflake_table" "customer_table" {
-  database            = snowflake_schema.customer_schema.database
+  database            = snowflake_database.project_db.name
   schema              = snowflake_schema.customer_schema.name
   name                = "CUSTOMER_BILLING"
   column {

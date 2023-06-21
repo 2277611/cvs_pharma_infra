@@ -1,0 +1,7 @@
+terraform state rm snowflake_database_grant.employee_db_grant
+terraform state rm snowflake_schema.employee_schema
+terraform state rm snowflake_schema_grant.employee_schema_grant
+terraform state rm snowflake_sequence.employee_sequence
+terraform state rm snowflake_sequence_grant.employee_sequence_grant
+terraform state rm snowflake_warehouse.cvs_warehouse
+terraform state rm snowflake_warehouse_grant.CVS_WH_grant
