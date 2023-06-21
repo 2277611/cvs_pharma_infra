@@ -27,7 +27,7 @@ resource "snowflake_database" "billing_db" {
   data_retention_time_in_days = 3
 }
 
-resource "snowflake_database" "project_db" {
+resource "snowflake_database" "project_db" { 
   name = "CVS_PROJ_DATA"
   comment = "Created by terraform"
   data_retention_time_in_days = 3
