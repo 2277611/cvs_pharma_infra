@@ -133,7 +133,7 @@ resource "snowflake_table" "employee_table" {
 }
 
 resource "snowflake_table" "new_employee_table" {
-  database            = snowflake_schema.employee_schema.database
+  database            = snowflake_database.employee_db.name
   schema              = snowflake_schema.employee_schema.name
   name                = "NEW_EMPLOYEE"
   column {
