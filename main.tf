@@ -234,3 +234,4 @@ resource "snowflake_table_grant" "customer_table_grant" {
   privilege = "OWNERSHIP"
   roles     = ["ACCOUNTADMIN"]
 }
+  
